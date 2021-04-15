@@ -1,0 +1,35 @@
+h1 {
+    padding: 10%;
+    text-align: center;
+
+}
+
+div.buttons {
+    height: 23%;
+}
+
+div.banner {
+    background-color: #fed038;
+}
+
+div.description{
+    padding-right: 10%;
+    padding-left: 10%;
+    margin-top: 5%;
+}
+
+a.login{
+    text-decoration: none;
+    float: right;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin: 1%;
+    width: 8%;
+    border-radius: 4px;
+
+}
+
+a:hover{
+    color: white;
+}
