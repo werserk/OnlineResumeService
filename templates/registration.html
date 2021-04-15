@@ -2,32 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/css/login.css" type="text/css">
-    <title>Вход</title>
+    <link rel="stylesheet" href="../static/css/registration.css" type="text/css">
+    <title>Регистрация</title>
 </head>
 <body>
     <div class="container">
         <div class="card">
             <div class="card-image">
                 <h2 class="card-heading">
-
                 </h2>
             </div>
-            <form class="card-form">
+            <form class="card-form" method="post">
                 <div class="input">
-                    <input type="text" class="input-field" required/>
-                    <label class="input-label">Имя Фамилия</label>
+                    <input type="text" class="input-field" name="name" required/>
+                    <label class="input-label">ФИО</label>
                 </div>
                             <div class="input">
-                    <input type="text" class="input-field" required/>
+                    <input type="text" class="input-field" name="email" required/>
                     <label class="input-label">Email</label>
                 </div>
                             <div class="input">
-                    <input type="password" class="input-field" required/>
+                    <input type="password" class="input-field" name="password" required/>
                     <label class="input-label">Пароль</label>
                 </div>
                 <div class="action">
-                    <button class="action-button">Регистрация</button>
+                    <button type="submit" class="action-button">Регистрация</button>
                 </div>
             </form>
             <div class="card-info">

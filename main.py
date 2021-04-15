@@ -1,9 +1,8 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request, url_for
 from data import db_session
-from forms import LoginForm
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'werserk_secret_key'
+app.config['SECRET_KEY'] = hash('werserk_secret_key')
 
 
 @app.route('/')
@@ -12,9 +11,15 @@ def hello_page():
     return render_template('base.html', **params)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/registration', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    if request.method == 'POST':
+        print(request.form['name'])
+        print(request.form['email'])
+        print(hash(request.form['password']))
+        redirect('/success')
+    elif request.method == 'GET':
+        return render_template('registration.html')
 
 
 @app.route('/success')
@@ -24,7 +29,7 @@ def success():
 
 
 def main():
-    # db_session.global_init("db/blogs.db")
+    db_session.global_init("db/blogs.db")
     app.run(port=8080, host='127.0.0.1')
 
 
