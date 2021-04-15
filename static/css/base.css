@@ -6,7 +6,6 @@ h1 {
 
 div.buttons {
     height: 23%;
-    background-color: #8597a3;
 }
 
 div.banner {
@@ -19,17 +18,33 @@ div.description{
     margin-top: 5%;
 }
 
-a.login{
+a.registration{
     text-decoration: none;
     float: right;
     background-color: black;
     color: white;
     text-align: center;
-    margin: 1%;
-    padding: 0.5em 0em;
-    width: 8%;
+    margin: 1em;
+    padding: 0.5em 2em;
     border-radius: 4px;
 
+}
+div.login{
+    text-align: center;
+    margin: auto;
+    width: 50%;
+    position: relative;
+    top: -3em;
+}
+a.login{
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin: auto;
+    padding: 0.5em 2em;
+    font-size: 3em;
+    border-radius: 3em;
 }
 
 a:hover{

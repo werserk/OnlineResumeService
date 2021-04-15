@@ -12,19 +12,29 @@ def hello_page():
 
 
 @app.route('/registration', methods=['GET', 'POST'])
-def login():
+def registration():
     if request.method == 'POST':
         print(request.form['name'])
         print(request.form['email'])
         print(hash(request.form['password']))
-        redirect('/success')
+        return redirect('http://127.0.0.1:8080/success')
     elif request.method == 'GET':
         return render_template('registration.html')
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        print(request.form['email'])
+        print(hash(request.form['password']))
+        return redirect('http://127.0.0.1:8080/success')
+    elif request.method == 'GET':
+        return render_template('login.html')
+
+
 @app.route('/success')
 def success():
-    params = {}
+    params = {'traceback': 'Всё готово'}
     return render_template('success.html', **params)
 
 
