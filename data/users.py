@@ -14,4 +14,4 @@ class User(SqlAlchemyBase):
                               index=True, unique=True, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
-    news = orm.relation("News", back_populates='user')
+    achivements = orm.relation("Achivement", back_populates='user')
