@@ -3,6 +3,7 @@ from data import db_connection as db
 import smtplib
 import os
 from email.mime.multipart import MIMEMultipart
+from random import randint
 
 
 def send_email(email, subject, text):
@@ -26,5 +27,5 @@ def send_email(email, subject, text):
     return True
 
 
-def accept():
-    pass
+def create_verification_code():
+    return randint(10000, 999999)
