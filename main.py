@@ -1,9 +1,9 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, request
 from data import db_session, db_connection as db
 from dotenv import load_dotenv
 from email_sending.mail_sender import send_email
+from tools.make_response import redirect
 
-HOST = 'http://127.0.0.1:8080'
 app = Flask(__name__)
 app.config['SECRET_KEY'] = hash('werserk_secret_key')
 load_dotenv()
@@ -24,14 +24,13 @@ def registration():
         password = hash(request.form['password'])
         repeated_password = hash(request.form['repeated_password'])
         if db.check_email_on_registration(db_sess, email):
-            return redirect(HOST + '/traceback?res=Email+уже+зарегистрирован')
+            return redirect('traceback', res='Email уже зарегистрирован')
         if password != repeated_password:
-            return redirect(HOST + '/traceback?res=Пароли+не+совпадают')
+            return redirect('traceback', res='Пароли не совпадают')
         if send_email(email, 'Завершение регистрации', 'Здесь будет ссылка на подтверждение регистрации'):
-            # db.create_user(db_sess, name, email, password)
-            return redirect(HOST + f'/traceback?res=Письмо+для+завершения+регистрации+отправлено+на+{email}')
-        else:
-            return redirect(HOST + '/traceback?res=Во+время+отправки+письма+произошла+ошибка')
+            db.create_user(db_sess, name, email, password)
+            return redirect('traceback', res=f'Письмо для завершения регистрации отправлено на {email}')
+        return redirect('traceback', res='Вo время отправки письма произошла ошибка')
     elif request.method == 'GET':
         return render_template('registration.html')
 
@@ -44,10 +43,15 @@ def login():
         password = hash(request.form['password'])
         traceback = db.check_email_and_password_on_login(db_sess, email, password)
         if traceback:
-            return redirect(HOST + f'/traceback?res={traceback}')
-        return redirect(HOST + '/traceback?res=ОК')
+            return redirect('traceback', res=traceback)
+        return redirect('traceback', res='ok')
     elif request.method == 'GET':
         return render_template('login.html')
+
+
+@app.route('/confirm_registration/code')
+def confirm_registration(code):
+    pass
 
 
 @app.route('/traceback')
