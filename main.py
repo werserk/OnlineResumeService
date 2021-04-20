@@ -1,6 +1,7 @@
-from flask import Flask, render_template, redirect, request, url_for
-from data import db_session
-import db_connection as db
+from flask import Flask, render_template, redirect, request
+from data import db_session, db_connection as db
+from dotenv import load_dotenv
+from email_sending.mail_sender import send_email
 
 HOST = 'http://127.0.0.1:8080'
 app = Flask(__name__)
@@ -22,11 +23,16 @@ def registration():
         password = hash(request.form['password'])
         repeated_password = hash(request.form['repeated_password'])
         if db.check_email_on_registration(db_sess, email):
-            return redirect(HOST + '/error?err=Email+уже+зарегистрирован')
+            return redirect(HOST + '/traceback?res=Email+уже+зарегистрирован')
         if password != repeated_password:
-            return redirect(HOST + '/error?err=Пароли+не+совпадают')
-        db.create_user(db_sess, name, email, password)
-        return redirect(HOST + '/success')
+            return redirect(HOST + '/traceback?res=Пароли+не+совпадают')
+        load_dotenv()
+        if send_email(email, 'Завершение регистрации', 'Здесь будет ссылка на подтверждение регистрации'):
+            # db.create_user(db_sess, name, email, password)
+            pass
+        else:
+            return redirect(HOST + '/traceback&res=Во время отправки письма произошла ошибка')
+        return redirect(HOST + '/traceback&res=ОК')
     elif request.method == 'GET':
         return render_template('registration.html')
 
@@ -39,26 +45,20 @@ def login():
         password = hash(request.form['password'])
         traceback = db.check_email_and_password_on_login(db_sess, email, password)
         if traceback:
-            return redirect(HOST + f'/error?err={traceback}')
-        return redirect(HOST + '/success')
+            return redirect(HOST + f'/traceback?res={traceback}')
+        return redirect(HOST + '/traceback&res=ОК')
     elif request.method == 'GET':
         return render_template('login.html')
 
 
-@app.route('/error')
-def error():
+@app.route('/traceback')
+def traceback():
     if request.method == 'GET':
-        params = {'err': 'Ошибка'}
+        params = {'res': 'Ошибка'}
         args = request.args.to_dict()
         for key in args.keys():
             params[key] = args[key]
-        return render_template('success.html', traceback=params['err'])
-
-
-@app.route('/success')
-def success():
-    params = {'traceback': 'Всё готово'}
-    return render_template('success.html', **params)
+        return render_template('traceback.html', traceback=params['err'])
 
 
 def main():
