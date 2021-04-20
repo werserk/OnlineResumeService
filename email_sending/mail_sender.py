@@ -1,12 +1,11 @@
 from email.mime.text import MIMEText
 from data import db_connection as db
 import smtplib
-import mimetypes
 import os
 from email.mime.multipart import MIMEMultipart
 
 
-def send_email(email, subject, text, attachements):
+def send_email(email, subject, text):
     addr_from = os.getenv("FROM")
     password = os.getenv("PASSWORD")
 
@@ -25,3 +24,7 @@ def send_email(email, subject, text, attachements):
     server.quit()
 
     return True
+
+
+def accept():
+    pass
