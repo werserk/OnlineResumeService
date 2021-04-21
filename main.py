@@ -1,7 +1,6 @@
 import os
 from flask import Flask, render_template, request, flash, g, session, make_response
 from data import db_session, db_connection as db
-from data.users import User
 from dotenv import load_dotenv
 from email_sending.mail_sender import send_email, create_verification_code
 from tools.make_response import redirect
@@ -71,7 +70,7 @@ def login():
             return redirect('traceback', res=traceback)
         user = db.load_user_by_email(db_sess, email)
         login_user(user)
-        return redirect('traceback', res='ok')
+        return redirect('my_page')
     elif request.method == 'GET':
         return render_template('login.html')
 
@@ -79,7 +78,7 @@ def login():
 @app.route('/my_page')
 @login_required
 def my_page():
-    return render_template('page.html', user=g.user)
+    return render_template('my_page.html', user=g.user)
 
 
 @app.route('/confirm_registration', methods=['GET', 'POST'])

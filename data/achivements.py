@@ -12,6 +12,7 @@ class Achivement(SqlAlchemyBase):
     title = sqlalchemy.Column(sqlalchemy.String, unique=True)
     description = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     image = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    private = sqlalchemy.Column(sqlalchemy.Boolean, nullable=False, default=False)
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("users.id"))
     user = orm.relation('User')
