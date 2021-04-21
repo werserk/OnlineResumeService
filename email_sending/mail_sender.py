@@ -28,4 +28,4 @@ def send_email(email, subject, text):
 
 
 def create_verification_code():
-    return randint(10000, 999999)
+    return randint(100000, 999999)

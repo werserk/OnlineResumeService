@@ -1,5 +1,6 @@
 from data.users import User
 from data.achivements import Achivement
+from werkzeug.security import check_password_hash
 
 
 def create_user(name, email, hashed_password):
@@ -28,10 +29,15 @@ def load_user_by_email(db_sess, email):
     return user
 
 
+def load_user_by_id(db_sess, id):
+    user = db_sess.query(User).filter(User.id == id).first()
+    return user
+
+
 def check_email_and_password_on_login(db_sess, email, password):
     user = db_sess.query(User).filter(User.email == email).first()
     if not user:
         return 'Пользователь+не+найден'
-    if user.hashed_password != password:
+    if not check_password_hash(user.hashed_password, password):
         return 'Пароль+неверен'
     return 0

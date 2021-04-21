@@ -31,7 +31,9 @@ input {
     border-radius: 10px;
     padding: 0.75rem;
 }
-
+.comment {
+    padding-left: 5%;
+}
 .card-image {
     border-radius: 8px;
     overflow: hidden;
