@@ -20,7 +20,7 @@
         <h2>&bull; {{ item.title }}</h2>
         <textarea class="description" readonly>{{ item.description }}</textarea>
         {% if pictures[item.id] %}
-            <img src="{{ url_for('static', filename=pictures[item.id]) }}" alt="Что-то пошло не так">
+        <img src="{{ url_for('static', filename=pictures[item.id]) }}" alt="Что-то пошло не так">
 
         {% endif %}
         {{ item.date }}
