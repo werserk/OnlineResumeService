@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, flash, g, session, make_response
+from flask import Flask, render_template, request, g, session, Blueprint
 from data import db_session, db_connection as db
 from dotenv import load_dotenv
 from email_sending.mail_sender import send_email, create_verification_code
@@ -12,6 +12,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 db_session.global_init("db/blogs.db")
 db_sess = db_session.create_session()
 
+blueprint = Blueprint(
+    'pages_api',
+    __name__,
+    template_folder='templates'
+)
 app = Flask(__name__)
 app.secret_key = generate_password_hash('werserk_secret_key')
 lm = LoginManager()
@@ -31,6 +36,7 @@ def before_request():
     g.user = current_user
 
 
+@lm.unauthorized_handler
 @app.route('/welcome')
 @app.route('/')
 def welcome_page():
@@ -72,16 +78,34 @@ def login():
         login_user(user)
         return redirect('my_page')
     elif request.method == 'GET':
+        if current_user.is_authenticated:
+            return redirect('my_page')
         return render_template('login.html')
 
 
-@app.route('/my_page')
+@app.route('/my_page', methods=['GET', 'POST'])
 @login_required
 def my_page():
-    return render_template('my_page.html', user=g.user)
+    if request.method == 'GET':
+        return render_template('my_page.html', user=g.user)
+    elif request.method == 'POST':
+        req = request.form.get('search')
+        user = db.load_user_by_email(db_sess, req)
+        if user:
+            return redirect(f'page/{user.id}')
+        user = db.load_user_by_name(db_sess, req)
+        if user:
+            return redirect(f'page/{user.id}')
+        return redirect('traceback', res='Пользователь с таким именем или почтой не найден')
+
+
+@app.route('/page/<int:id>')
+def page(id):
+    return render_template('page.html', user=db.load_user_by_id(db_sess, id))
 
 
 @app.route('/confirm_registration', methods=['GET', 'POST'])
+@oid.loginhandler
 def confirm_registration():
     if request.method == 'GET':
         return render_template('confirm_registration.html')
@@ -90,8 +114,9 @@ def confirm_registration():
         data = session.get('data')
         params_for_user = data['name'], data['email'], data['hashed_password']
         if code == data['code']:
-            db.commit_user(db_sess, params_for_user)
-            return redirect('traceback', res='Успешно')
+            user = db.commit_user(db_sess, params_for_user)
+            login_user(user)
+            return redirect('my_page')
         return redirect('traceback', res='Неправильный код')
 
 
@@ -112,15 +137,14 @@ def create_achivement():
     elif request.method == 'POST':
         title = request.form["title"]
         description = request.form["description"]
-        private = not request.form["private"]
+        private = 0 if request.form.get("private") == 'on' else 1
         file = request.files["file"]
         file_bytes = file.read()
         traceback = db.create_achivement(db_sess, title, description, private, file_bytes, g.user.id)
         if traceback:
             return render_template('traceback.html', traceback=traceback)
-        current_achivement = db.load_achivement_by_title(db_sess, title)
-
-        return redirect('traceback', res='Достижение успешно создано')
+        db.load_achivement_by_title(db_sess, title)
+        return redirect('my_page')
 
 
 @app.route('/logout')

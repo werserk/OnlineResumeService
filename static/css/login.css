@@ -7,7 +7,7 @@
 body {
     font-family: "DM Sans", sans-serif;
     line-height: 1.5;
-    padding: 0 2rem;
+    padding: 0.5rem 0.5rem;
     background-color: #fed038;
 }
 
@@ -88,6 +88,16 @@ textarea {
     transition: 0.25s ease;
 }
 
+a.main {
+    margin: auto;
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 0.5em 2em;
+    border-radius: 4px;
+}
+
 .input-field {
     appearance: none;
     border-radius: 0;
@@ -103,10 +113,6 @@ textarea {
 .input-field:focus, .input-field:valid {
     outline: 0;
     border-bottom-color: #fed038;
-}
-
-button.file {
-
 }
 
 div.files {

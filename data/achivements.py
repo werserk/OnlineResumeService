@@ -17,4 +17,3 @@ class Achivement(SqlAlchemyBase):
     date = sqlalchemy.Column(sqlalchemy.Date, nullable=False, default=date.today())
     picture = sqlalchemy.Column(sqlalchemy.BLOB, nullable=True)
     user = orm.relation('User')
-    achivements = orm.relation("Blob", back_populates='achivement')

@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../static/css/page.css" type="text/css">
-    <title>{{ user.name }}</title>
+    <title>OnlineResumeService</title>
 </head>
 <body>
-    <div class="container">
-        <div class="tape">
-            <h1>{{ user.name }}</h1>
-            {% for item in user.achivements %}
-                {% if not item.private %}
-                    <h2>&bull; {{ item.title }}</h2>
-                    <textarea class="description" readonly>{{ item.description }}</textarea>
-                    <br>
-                {% endif %}
-            {% endfor %}
-        </div>
+<a href="../login" class="main">Назад</a>
+<div class="container">
+    <div class="tape">
+        <h1>{{ user.name }}</h1>
+        {% for item in user.achivements %}
+        {% if not item.private %}
+        <h2>&bull; {{ item.title }}</h2>
+        <textarea class="description" readonly>{{ item.description }}</textarea>
+        <br>
+        {% endif %}
+        {% endfor %}
     </div>
+</div>
 </body>
 </html>

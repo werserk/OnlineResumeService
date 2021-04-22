@@ -6,17 +6,25 @@
     <title>{{ user.name }}</title>
 </head>
 <body>
-    <div class="container">
-        <div class="tape">
-            <h1>{{ user.name }}</h1>
-            {% for item in user.achivements %}
-                <h2>&bull; {{ item.title }}</h2>
-                <textarea class="description" readonly>{{ item.description }}</textarea>
-                {{ item.date }}
-                <br>
-            {% endfor %}
-            <div class="append"><a href="create_achivement" class="append">Добавить достижение</a></div>
-        </div>
+<a href="welcome" class="main">На главную</a>
+<div class="search">
+    <form method="post">
+        <input type="text" class="search" name="search">
+        <button type="submit" class="search">&#128269;</button>
+    </form>
+</div>
+<div class="container">
+    <div class="tape">
+        <h1>{{ user.name }}</h1>
+        {% for item in user.achivements %}
+        <h2>&bull; {{ item.title }}</h2>
+        <textarea class="description" readonly>{{ item.description }}</textarea>
+        {{ item.date }}
+        <br>
+        {% endfor %}
+        <div class="append"><a href="create_achivement" class="main">Добавить достижение</a></div>
     </div>
+</div>
+<a href="logout" class="main">Выйти</a>
 </body>
 </html>

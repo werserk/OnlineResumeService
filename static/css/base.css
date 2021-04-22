@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+body {
+    font-family: "DM Sans", sans-serif;
+    line-height: 1.5;
+}
+
 h1 {
     padding: 10%;
     text-align: center;
@@ -12,13 +19,23 @@ div.banner {
     background-color: #fed038;
 }
 
-div.description{
+a.main {
+    margin: auto;
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 0.5em 2em;
+    border-radius: 4px;
+}
+
+div.description {
     padding-right: 10%;
     padding-left: 10%;
     margin-top: 5%;
 }
 
-a.registration{
+a.registration {
     text-decoration: none;
     float: right;
     background-color: black;
@@ -29,14 +46,16 @@ a.registration{
     border-radius: 4px;
 
 }
-div.login{
+
+div.login {
     text-align: center;
     margin: auto;
     width: 50%;
     position: relative;
     top: -3em;
 }
-a.login{
+
+a.login {
     text-decoration: none;
     background-color: black;
     color: white;
@@ -47,6 +66,6 @@ a.login{
     border-radius: 3em;
 }
 
-a:hover{
+a:hover {
     color: white;
 }

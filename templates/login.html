@@ -6,29 +6,30 @@
     <title>Вход</title>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="card-image">
-                <h2 class="card-heading">
-                </h2>
+<a href="welcome" class="main">На главную</a>
+<div class="container">
+    <div class="card">
+        <div class="card-image">
+            <h2 class="card-heading">
+            </h2>
+        </div>
+        <form class="card-form" method="post">
+            <div class="input">
+                <input type="text" class="input-field" name="email" required/>
+                <label class="input-label">Email</label>
             </div>
-            <form class="card-form" method="post">
-                <div class="input">
-                    <input type="text" class="input-field" name="email" required/>
-                    <label class="input-label">Email</label>
-                </div>
-                <div class="input">
-                    <input type="password" class="input-field" name="password" required/>
-                    <label class="input-label">Пароль</label>
-                </div>
-                <div class="action">
-                    <button type="submit" class="action-button">Вход</button>
-                </div>
-            </form>
-            <div class="card-info">
-                <a href="#">Не помню пароль</a>
+            <div class="input">
+                <input type="password" class="input-field" name="password" required/>
+                <label class="input-label">Пароль</label>
             </div>
+            <div class="action">
+                <button type="submit" class="action-button">Вход</button>
+            </div>
+        </form>
+        <div class="card-info">
+            <a href="#">Не помню пароль</a>
         </div>
     </div>
+</div>
 </body>
 </html>

@@ -6,28 +6,29 @@
     <title>Создание</title>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <form class="card-form" method="post" enctype="multipart/form-data">
-                <div class="input">
-                    <input class="input-field" name="title" required maxlength="30">
-                    <label class="input-label">Название</label>
-                </div>
-                <div class="input">
-                    <textarea class="input-field" name="description" required></textarea>
-                    <label class="input-label">Описание</label>
-                </div>
-                <div class="files">
-                    <input type="file" class="file" name="file" accept="image/*">
-                </div>
-                <div class="cbx">
-                    Видят другие пользователи<input type="checkbox" name="private" checked>
-                </div>
-                <div class="action">
-                    <button class="action-button" type="submit">Создать</button>
-                </div>
-            </form>
-        </div>
+<a href="my_page" class="main">Назад</a>
+<div class="container">
+    <div class="card">
+        <form class="card-form" method="post" enctype="multipart/form-data">
+            <div class="input">
+                <input class="input-field" name="title" required maxlength="30">
+                <label class="input-label">Название</label>
+            </div>
+            <div class="input">
+                <textarea class="input-field" name="description" required></textarea>
+                <label class="input-label">Описание</label>
+            </div>
+            <div class="files">
+                <input type="file" class="file" name="file" accept="image/*">
+            </div>
+            <div class="cbx">
+                Видят другие пользователи<input type="checkbox" name="private" checked>
+            </div>
+            <div class="action">
+                <button class="action-button" type="submit">Создать</button>
+            </div>
+        </form>
     </div>
+</div>
 </body>
 </html>

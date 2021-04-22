@@ -7,21 +7,48 @@
 body {
     font-family: "DM Sans", sans-serif;
     line-height: 1.5;
-    padding: 0 2rem;
+    padding: 0.5rem 0.5rem;
     background-color: #fed038;
 }
+
 textarea {
     min-height: 5rem;
     min-width: 100%;
     max-width: 100%;
 }
-h1{
-    margin-top: 4rem;
+
+h1 {
     text-align: center;
+    text-decoration: underline black;
 }
+
 img {
     max-width: 100%;
     display: block;
+}
+
+div.container {
+    margin-top: -6rem;
+}
+
+div.search {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+input.search {
+    width: 60%;
+    font-size: 300%;
+}
+
+button.search {
+    font-size: 260%;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+button.search:active {
+    border-color: transparent;
 }
 
 .tape {
@@ -43,7 +70,7 @@ div.append {
     text-align: center;
 }
 
-a.append {
+a.main {
     margin: auto;
     text-decoration: none;
     background-color: black;

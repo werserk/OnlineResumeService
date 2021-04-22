@@ -6,36 +6,38 @@
     <title>Регистрация</title>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="card-image">
+<a href="welcome" class="main">На главную</a>
+<div class="container">
+    <div class="card">
+        <div class="card-image">
+        </div>
+        <form class="card-form" method="post" enctype="multipart/form-data">
+            <div class="input">
+                <input type="text" class="input-field" name="name" maxlength="70" required/>
+                <label class="input-label">ФИО</label>
             </div>
-            <form class="card-form" method="post">
-                <div class="input">
-                    <input type="text" class="input-field" name="name" required/>
-                    <label class="input-label">ФИО</label>
-                </div>
-                <div class="input">
-                    <input type="text" class="input-field" name="email" required/>
-                    <label class="input-label">Email</label>
-                </div>
-                <div class="input">
-                    <input type="password" class="input-field" name="password" minlength="8" required/>
-                    <label class="input-label">Пароль</label>
-                </div>
-                <div class="input">
-                    <input type="password" class="input-field" name="repeated_password" minlength="8" required/>
-                    <label class="input-label">Повторите пароль</label>
-                </div>
-                <div class="action">
-                    <button type="submit" class="action-button">Регистрация</button>
-                </div>
-            </form>
-            <div class="card-info">
-                <p>Зарегистрировавшись, вы даёте согласие на <a href="#">обработку персональных данных</a></p>
+            <div class="input">
+                <input type="text" class="input-field" name="email" required/>
+                <label class="input-label">Email</label>
             </div>
+            <div class="input">
+                <input type="password" class="input-field" name="password" minlength="8" maxlength="20" required/>
+                <label class="input-label">Пароль</label>
+            </div>
+            <div class="input">
+                <input type="password" class="input-field" name="repeated_password" minlength="8" maxlength="20" required/>
+                <label class="input-label">Повторите пароль</label>
+            </div>
+            <br>
+            <div class="action">
+                <button type="submit" class="action-button">Регистрация</button>
+            </div>
+        </form>
+        <div class="card-info">
+            <p>Зарегистрировавшись, вы даёте согласие на обработку персональных данных</p>
         </div>
     </div>
+</div>
 
 </body>
 </html>
