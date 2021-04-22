@@ -1,11 +1,12 @@
 import os
-from flask import Flask, render_template, request, g, session, Blueprint
+import shutil
+from flask import Flask, render_template, request, g, session, Blueprint, url_for
 from data import db_session, db_connection as db
 from dotenv import load_dotenv
 from email_sending.mail_sender import send_email, create_verification_code
 from tools.make_response import redirect
 from flask_login import LoginManager
-from flask_login import login_user, logout_user, current_user, login_required, login_manager
+from flask_login import login_user, logout_user, current_user, login_required
 from flask_openid import OpenID
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -24,6 +25,23 @@ lm.init_app(app)
 oid = OpenID(app, os.path.abspath('tmp'))
 
 load_dotenv()
+
+
+def kill_pics():
+    if os.path.exists('static/im'):
+        shutil.rmtree('static/im')
+
+
+def make_links_for_pics(user_id):
+    achivements = db.load_achivements_by_user_id(db_sess, user_id)
+    if not os.path.exists('static/im'):
+        os.makedirs('static/im')
+    pictures = {}
+    for achivement in achivements:
+        with open(f'static/im/{achivement.id}.png', 'wb') as file:
+            file.write(achivement.picture)
+        pictures[achivement.id] = f'im/{achivement.id}.png'
+    return pictures
 
 
 @lm.user_loader
@@ -78,6 +96,7 @@ def login():
         login_user(user)
         return redirect('my_page')
     elif request.method == 'GET':
+        kill_pics()
         if current_user.is_authenticated:
             return redirect('my_page')
         return render_template('login.html')
@@ -87,7 +106,9 @@ def login():
 @login_required
 def my_page():
     if request.method == 'GET':
-        return render_template('my_page.html', user=g.user)
+        user = g.user
+        pictures = make_links_for_pics(user.id)
+        return render_template('my_page.html', user=user, pictures=pictures)
     elif request.method == 'POST':
         req = request.form.get('search')
         user = db.load_user_by_email(db_sess, req)
@@ -101,7 +122,9 @@ def my_page():
 
 @app.route('/page/<int:id>')
 def page(id):
-    return render_template('page.html', user=db.load_user_by_id(db_sess, id))
+    user = db.load_user_by_id(db_sess, id)
+    pictures = make_links_for_pics(user.id)
+    return render_template('page.html', user=user, pictures=pictures)
 
 
 @app.route('/confirm_registration', methods=['GET', 'POST'])

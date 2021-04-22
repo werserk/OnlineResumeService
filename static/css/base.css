@@ -44,7 +44,6 @@ a.registration {
     margin: 1em;
     padding: 0.5em 2em;
     border-radius: 4px;
-
 }
 
 div.login {
@@ -64,6 +63,17 @@ a.login {
     padding: 0.5em 2em;
     font-size: 3em;
     border-radius: 3em;
+}
+
+a.traceback {
+    text-decoration: none;
+    float: left;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin: 1em;
+    padding: 0.5em 2em;
+    border-radius: 4px;
 }
 
 a:hover {
