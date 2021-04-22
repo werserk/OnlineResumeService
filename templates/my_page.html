@@ -8,15 +8,14 @@
 <body>
     <div class="container">
         <div class="tape">
-            {{ user.name }}
+            <h1>{{ user.name }}</h1>
             {% for item in user.achivements %}
-                {% if not item.private %}
-                    {{ item.picture }}
-                    {{ item.title }}
-                    {{ item.content }}
-                {% endif %}
+                <h2>&bull; {{ item.title }}</h2>
+                <textarea class="description" readonly>{{ item.description }}</textarea>
+                {{ item.date }}
+                <br>
             {% endfor %}
-            <div class="append"><a href="traceback" class="append">Добавить достижение</a></div>
+            <div class="append"><a href="create_achivement" class="append">Добавить достижение</a></div>
         </div>
     </div>
 </body>

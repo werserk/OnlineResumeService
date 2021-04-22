@@ -16,11 +16,6 @@ img {
     display: block;
 }
 
-input {
-    appearance: none;
-    border-radius: 0;
-}
-
 .card {
     margin: 2rem auto;
     display: flex;
@@ -31,9 +26,11 @@ input {
     border-radius: 10px;
     padding: 0.75rem;
 }
+
 .comment {
     padding-left: 5%;
 }
+
 .card-image {
     border-radius: 8px;
     overflow: hidden;
@@ -67,6 +64,12 @@ input {
     padding: 2rem 1rem 0;
 }
 
+textarea {
+    min-height: 5rem;
+    min-width: 100%;
+    max-width: 100%;
+}
+
 .input {
     display: flex;
     flex-direction: column-reverse;
@@ -86,6 +89,8 @@ input {
 }
 
 .input-field {
+    appearance: none;
+    border-radius: 0;
     border: 0;
     z-index: 1;
     background-color: transparent;
@@ -98,6 +103,20 @@ input {
 .input-field:focus, .input-field:valid {
     outline: 0;
     border-bottom-color: #fed038;
+}
+
+button.file {
+
+}
+
+div.files {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+div.cbx {
+    margin-top: 2rem;
+    text-align: center;
 }
 
 .input-field:focus + .input-label, .input-field:valid + .input-label {

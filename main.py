@@ -104,6 +104,25 @@ def traceback():
     return render_template('traceback.html', traceback=params['res'])
 
 
+@app.route('/create_achivement', methods=['GET', 'POST'])
+@login_required
+def create_achivement():
+    if request.method == 'GET':
+        return render_template('create_achivement.html')
+    elif request.method == 'POST':
+        title = request.form["title"]
+        description = request.form["description"]
+        private = not request.form["private"]
+        file = request.files["file"]
+        file_bytes = file.read()
+        traceback = db.create_achivement(db_sess, title, description, private, file_bytes, g.user.id)
+        if traceback:
+            return render_template('traceback.html', traceback=traceback)
+        current_achivement = db.load_achivement_by_title(db_sess, title)
+
+        return redirect('traceback', res='Достижение успешно создано')
+
+
 @app.route('/logout')
 def logout():
     logout_user()

@@ -8,12 +8,12 @@
 <body>
     <div class="container">
         <div class="tape">
-            {{ user.name }}
+            <h1>{{ user.name }}</h1>
             {% for item in user.achivements %}
                 {% if not item.private %}
-                    {{ item.picture }}
-                    {{ item.title }}
-                    {{ item.content }}
+                    <h2>&bull; {{ item.title }}</h2>
+                    <textarea class="description" readonly>{{ item.description }}</textarea>
+                    <br>
                 {% endif %}
             {% endfor %}
         </div>
