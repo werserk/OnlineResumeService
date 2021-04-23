@@ -18,7 +18,6 @@
         <div class="tape">
             <h1>{{ user.name }}</h1>
             {% for item in user.achivements %}
-            <!--            <button type="submit" id="{{ item.id }}" class="delete">&#128711;</button>-->
             <h2>&bull; {{ item.title }}</h2>
             <textarea class="description" readonly>{{ item.description }}</textarea>
             {% if pictures[item.id] %}

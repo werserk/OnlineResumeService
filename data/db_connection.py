@@ -66,10 +66,12 @@ def create_achivement(db_sess, title, description, private, picture, user_id):
 
 
 def load_achivement_by_title(db_sess, title):
-    achivement = db_sess.query(Achivement).filter(Achivement.title == title).first()
+    achivement = db_sess.query(Achivement).filter(
+        Achivement.title == title).first()
     return achivement
 
 
 def load_achivements_by_user_id(db_sess, user_id):
-    achivements = db_sess.query(Achivement).filter(Achivement.user_id == user_id).all()
+    achivements = db_sess.query(Achivement).filter(
+        Achivement.user_id == user_id).all()
     return achivements

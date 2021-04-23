@@ -1,6 +1,5 @@
 import os
-import shutil
-from flask import Flask, render_template, request, g, session, Blueprint
+from flask import Flask, render_template, request, g, session, jsonify
 from data import db_session, db_connection as db
 from dotenv import load_dotenv
 from email_sending.mail_sender import send_email, create_verification_code
@@ -13,11 +12,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 db_session.global_init("db/blogs.db")
 db_sess = db_session.create_session()
 
-blueprint = Blueprint(
-    'pages_api',
-    __name__,
-    template_folder='templates'
-)
 app = Flask(__name__)
 app.secret_key = generate_password_hash('werserk_secret_key')
 lm = LoginManager()
@@ -25,11 +19,6 @@ lm.init_app(app)
 oid = OpenID(app, os.path.abspath('tmp'))
 
 load_dotenv()
-
-
-def kill_pics():
-    if os.path.exists('static/im'):
-        shutil.rmtree('static/im')
 
 
 def make_links_for_pics(user_id):
@@ -78,7 +67,8 @@ def registration():
         if send_email(email, 'Завершение регистрации на OnlineResumeService',
                       f'Код для подтверждения: {code}'):
             return redirect('confirm_registration')
-        return redirect('traceback', res='Вo время отправки письма произошла ошибка')
+        return redirect('traceback',
+                        res='Вo время отправки письма произошла ошибка')
     elif request.method == 'GET':
         return render_template('registration.html')
 
@@ -89,14 +79,14 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        traceback = db.check_email_and_password_on_login(db_sess, email, password)
+        traceback = db.check_email_and_password_on_login(
+            db_sess, email, password)
         if traceback:
             return redirect('traceback', res=traceback)
         user = db.load_user_by_email(db_sess, email)
         login_user(user)
         return redirect('my_page')
     elif request.method == 'GET':
-        kill_pics()
         if current_user.is_authenticated:
             return redirect('my_page')
         return render_template('login.html')
@@ -117,7 +107,9 @@ def my_page():
         user = db.load_user_by_name(db_sess, req)
         if user:
             return redirect(f'page/{user.id}')
-        return redirect('traceback', res='Пользователь с таким именем или почтой не найден')
+        return redirect(
+            'traceback',
+            res='Пользователь с таким именем или почтой не найден')
 
 
 @app.route('/page/<int:id>')
@@ -125,6 +117,13 @@ def page(id):
     user = db.load_user_by_id(db_sess, id)
     pictures = make_links_for_pics(user.id)
     return render_template('page.html', user=user, pictures=pictures)
+
+
+@app.route('/api/user/<int:id>')
+def api_user(id):
+    user = db.load_user_by_id(db_sess, id)
+    data = {'user': {'id': user.id, 'name': user.name, 'email': user.email}}
+    return jsonify(data)
 
 
 @app.route('/confirm_registration', methods=['GET', 'POST'])
@@ -163,7 +162,8 @@ def create_achivement():
         private = 0 if request.form.get("private") == 'on' else 1
         file = request.files["file"]
         file_bytes = file.read()
-        traceback = db.create_achivement(db_sess, title, description, private, file_bytes, g.user.id)
+        traceback = db.create_achivement(
+            db_sess, title, description, private, file_bytes, g.user.id)
         if traceback:
             return render_template('traceback.html', traceback=traceback)
         db.load_achivement_by_title(db_sess, title)
