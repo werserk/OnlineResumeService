@@ -50,9 +50,6 @@ def check_email_and_password_on_login(db_sess, email, password):
 
 
 def create_achivement(db_sess, title, description, private, picture, user_id):
-    if db_sess.query(Achivement).filter(Achivement.title == title).first():
-        return 'Достижение с таким названием уже существует'
-
     achivement = Achivement()
     achivement.title = title
     achivement.description = description
