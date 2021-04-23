@@ -1,5 +1,4 @@
 from email.mime.text import MIMEText
-from data import db_connection as db
 import smtplib
 import os
 from email.mime.multipart import MIMEMultipart
@@ -18,7 +17,7 @@ def send_email(email, subject, text):
     body = text
     msg.attach(MIMEText(body, 'plain'))
 
-    server = smtplib.SMTP_SSL(os.getenv('HOST'), os.getenv('PORT'))
+    server = smtplib.SMTP_SSL(os.getenv('HOST'), os.getenv('PORT_MAIL'))
     server.login(addr_from, password)
 
     server.send_message(msg)

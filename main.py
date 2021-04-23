@@ -1,6 +1,6 @@
 import os
 import shutil
-from flask import Flask, render_template, request, g, session, Blueprint, url_for
+from flask import Flask, render_template, request, g, session, Blueprint
 from data import db_session, db_connection as db
 from dotenv import load_dotenv
 from email_sending.mail_sender import send_email, create_verification_code

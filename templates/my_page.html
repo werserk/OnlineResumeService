@@ -10,24 +10,26 @@
 <div class="search">
     <form method="post">
         <input type="text" class="search" name="search">
-        <button type="submit" class="search">&#128269;</button>
+        <button type="submit" class="search" name="search">&#128269;</button>
     </form>
 </div>
 <div class="container">
-    <div class="tape">
-        <h1>{{ user.name }}</h1>
-        {% for item in user.achivements %}
-        <h2>&bull; {{ item.title }}</h2>
-        <textarea class="description" readonly>{{ item.description }}</textarea>
-        {% if pictures[item.id] %}
-        <img src="{{ url_for('static', filename=pictures[item.id]) }}" alt="Что-то пошло не так">
-
-        {% endif %}
-        {{ item.date }}
-        <br>
-        {% endfor %}
-        <div class="append"><a href="create_achivement" class="main">Добавить достижение</a></div>
-    </div>
+    <form method="post">
+        <div class="tape">
+            <h1>{{ user.name }}</h1>
+            {% for item in user.achivements %}
+            <!--            <button type="submit" id="{{ item.id }}" class="delete">&#128711;</button>-->
+            <h2>&bull; {{ item.title }}</h2>
+            <textarea class="description" readonly>{{ item.description }}</textarea>
+            {% if pictures[item.id] %}
+            <img src="{{ url_for('static', filename=pictures[item.id]) }}" alt="Что-то пошло не так">
+            {% endif %}
+            {{ item.date }}
+            <br>
+            {% endfor %}
+            <div class="append"><a href="create_achivement" class="main">Добавить достижение</a></div>
+        </div>
+    </form>
 </div>
 <a href="logout" class="main">Выйти</a>
 </body>
