@@ -1,5 +1,11 @@
 # OnlineResumeService
+
 ## Overview
-Данный проект - мой главный проект в Яндекс.Лицее. 
-Данный сервис предоставляет функционал загрузки достижений на сайт. 
-Главная цель - не тратить много времени на сложную организацию резюме.
+
+It's my main project in Yandex Lyceum.
+
+## Installation
+
+1. Clone this repository
+2. Install requirements
+3. Run `python3 main.py`
