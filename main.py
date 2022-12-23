@@ -12,13 +12,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 db_session.global_init("db/blogs.db")
 db_sess = db_session.create_session()
 
+load_dotenv()
+
 app = Flask(__name__)
-app.secret_key = generate_password_hash('werserk_secret_key')
+app.secret_key = generate_password_hash(os.getenv('SECRET_KEY'))
 lm = LoginManager()
 lm.init_app(app)
 oid = OpenID(app, os.path.abspath('tmp'))
-
-load_dotenv()
 
 
 def make_links_for_pics(user_id):
@@ -64,11 +64,17 @@ def registration():
         code = create_verification_code()
         session['data'] = {'code': code, 'name': name, 'email': email,
                            'hashed_password': password}
-        if send_email(email, 'Завершение регистрации на OnlineResumeService',
-                      f'Код для подтверждения: {code}'):
-            return redirect('confirm_registration')
-        return redirect('traceback',
-                        res='Вo время отправки письма произошла ошибка')
+        # TODO: find another way to send email
+        # if send_email(email, 'Завершение регистрации на OnlineResumeService',
+        #               f'Код для подтверждения: {code}'):
+        # return redirect('confirm_registration')
+        # return redirect('traceback',
+        #                 res='Вo время отправки письма произошла ошибка')
+        data = session['data']
+        params_for_user = data['name'], data['email'], data['hashed_password']
+        user = db.commit_user(db_sess, params_for_user)
+        login_user(user)
+        return redirect('my_page')
     elif request.method == 'GET':
         return render_template('registration.html')
 
@@ -129,6 +135,7 @@ def api_user(id):
 @app.route('/confirm_registration', methods=['GET', 'POST'])
 @oid.loginhandler
 def confirm_registration():
+    # TODO: update registration
     if request.method == 'GET':
         return render_template('confirm_registration.html')
     elif request.method == 'POST':

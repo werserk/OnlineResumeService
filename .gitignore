@@ -2,3 +2,4 @@ venv/
 .idea/
 db/*
 .env
+static/im/*
